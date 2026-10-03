@@ -1,4 +1,4 @@
-import React, { useEffect, useMemo, useRef } from 'react';
+import React, { useMemo } from 'react';
 import styled from 'styled-components';
 import { motion } from 'framer-motion';
 import MessageCard from './components/MessageCard';
@@ -9,9 +9,9 @@ const AppContainer = styled.div`
   width: 100%;
   min-height: 100vh;
   background:
-    radial-gradient(circle at top, rgba(255, 105, 180, 0.24), transparent 30%),
-    radial-gradient(circle at bottom, rgba(255, 168, 203, 0.2), transparent 24%),
-    linear-gradient(180deg, #0d0716 0%, #120b1e 35%, #07040d 100%);
+    radial-gradient(circle at 12% 8%, rgba(255, 220, 235, 0.28), transparent 28%),
+    radial-gradient(circle at 88% 78%, rgba(190, 167, 255, 0.2), transparent 30%),
+    linear-gradient(180deg, #241326 0%, #321b38 45%, #160e24 100%);
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -26,7 +26,7 @@ const GlowOrb = styled(motion.div)`
   width: 420px;
   height: 420px;
   border-radius: 50%;
-  background: radial-gradient(circle, rgba(255, 108, 180, 0.28) 0%, rgba(255, 108, 180, 0.08) 35%, transparent 72%);
+  background: radial-gradient(circle, rgba(255, 181, 213, 0.3) 0%, rgba(201, 170, 255, 0.12) 38%, transparent 72%);
   filter: blur(8px);
   z-index: 1;
 `;
@@ -84,7 +84,7 @@ const Subtitle = styled(motion.p)`
   letter-spacing: 0.04em;
 `;
 
-const PuppyContainer = styled(motion.div)`
+const PhotoContainer = styled(motion.div)`
   position: relative;
   z-index: 8;
   width: min(100%, 860px);
@@ -94,26 +94,67 @@ const PuppyContainer = styled(motion.div)`
   margin: 16px auto 8px;
 `;
 
-const ModelFrame = styled.div`
+const PhotoFrame = styled.div`
   position: relative;
-  width: min(82vw, 620px);
-  height: clamp(260px, 42vw, 480px);
-  border-radius: 32px;
-  background: linear-gradient(135deg, rgba(255, 255, 255, 0.16), rgba(255, 255, 255, 0.04));
-  border: 1px solid rgba(255, 255, 255, 0.18);
+  width: min(88vw, 560px);
+  aspect-ratio: 1 / 1;
+  padding: 12px;
+  border-radius: 36px;
+  background: linear-gradient(145deg, rgba(255, 225, 241, 0.55), rgba(255, 105, 180, 0.12));
+  border: 1px solid rgba(255, 255, 255, 0.38);
   box-shadow:
-    0 18px 40px rgba(255, 96, 180, 0.18),
-    inset 0 0 24px rgba(255, 255, 255, 0.08);
+    0 24px 70px rgba(255, 61, 156, 0.28),
+    0 0 0 8px rgba(255, 210, 233, 0.08),
+    inset 0 0 28px rgba(255, 255, 255, 0.22);
   overflow: hidden;
+  transform: rotate(-1deg);
+  transition: transform 0.45s ease, box-shadow 0.45s ease;
+
+  &:hover {
+    transform: rotate(0deg) translateY(-6px) scale(1.015);
+    box-shadow:
+      0 30px 80px rgba(255, 61, 156, 0.36),
+      0 0 0 8px rgba(255, 210, 233, 0.12),
+      inset 0 0 28px rgba(255, 255, 255, 0.28);
+  }
 
   &::before {
     content: '';
     position: absolute;
-    inset: 10px;
-    border-radius: 24px;
-    border: 1px solid rgba(255, 196, 223, 0.35);
+    inset: 12px;
+    border-radius: 27px;
+    border: 1px solid rgba(255, 255, 255, 0.5);
     pointer-events: none;
+    z-index: 2;
   }
+`;
+
+const Portrait = styled.img`
+  width: 100%;
+  height: 100%;
+  display: block;
+  object-fit: cover;
+  object-position: center;
+  border-radius: 27px;
+  filter: saturate(1.06) contrast(1.02);
+  user-select: none;
+`;
+
+const PhotoCaption = styled.div`
+  position: absolute;
+  left: 28px;
+  bottom: 28px;
+  z-index: 3;
+  padding: 9px 15px;
+  border-radius: 999px;
+  color: #fff;
+  background: rgba(64, 12, 47, 0.58);
+  border: 1px solid rgba(255, 255, 255, 0.35);
+  backdrop-filter: blur(10px);
+  font-size: 0.78rem;
+  font-weight: 500;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
 `;
 
 const circles = [
@@ -124,8 +165,6 @@ const circles = [
 ];
 
 function App() {
-  const modelViewerRef = useRef(null);
-
   const stars = useMemo(
     () =>
       Array.from({ length: 46 }, (_, i) => {
@@ -146,12 +185,6 @@ function App() {
       }),
     []
   );
-
-  useEffect(() => {
-    if (modelViewerRef.current) {
-      // placeholder for future model setup
-    }
-  }, []);
 
   return (
     <AppContainer>
@@ -201,30 +234,16 @@ function App() {
         </Subtitle>
       </Header>
 
-      <PuppyContainer
+      <PhotoContainer
         initial={{ opacity: 0, scale: 0.92 }}
         animate={{ opacity: 1, scale: 1 }}
         transition={{ duration: 1, delay: 0.35 }}
       >
-        <ModelFrame>
-          <model-viewer
-            ref={modelViewerRef}
-            src="/toon_cute_dog.glb"
-            alt="A cute cartoon dog"
-            auto-rotate
-            camera-controls
-            camera-orbit="0deg 10deg 2m"
-            min-camera-orbit="auto auto auto"
-            max-camera-orbit="auto auto auto"
-            shadow-intensity="1"
-            environment-image="neutral"
-            exposure="1"
-            ar
-            ar-modes="webxr scene-viewer quick-look"
-            style={{ width: '100%', height: '100%', display: 'block', background: 'transparent' }}
-          ></model-viewer>
-        </ModelFrame>
-      </PuppyContainer>
+        <PhotoFrame>
+          <Portrait src="/huongmuoi-8-3.png" alt="Huongmuoi trong tà áo dài màu hồng" />
+          <PhotoCaption>Gửi người anh thương</PhotoCaption>
+        </PhotoFrame>
+      </PhotoContainer>
 
       <MessageCard marginBottom />
     </AppContainer>
