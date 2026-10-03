@@ -190,7 +190,7 @@ function App() {
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.9 }}
         >
-          Chúc mừng ngày 8/3, cún iu của anhhh!
+          Chúc mừng ngày 8/3, huongmuoi là vịt!
         </Title>
         <Subtitle
           initial={{ opacity: 0, y: 15 }}
