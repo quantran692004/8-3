@@ -9,16 +9,16 @@ const AppContainer = styled.div`
   width: 100%;
   min-height: 100vh;
   background:
-    radial-gradient(circle at 12% 8%, rgba(255, 220, 235, 0.28), transparent 28%),
-    radial-gradient(circle at 88% 78%, rgba(190, 167, 255, 0.2), transparent 30%),
-    linear-gradient(180deg, #241326 0%, #321b38 45%, #160e24 100%);
+    radial-gradient(circle at 8% 4%, rgba(255, 206, 224, 0.7), transparent 25%),
+    radial-gradient(circle at 92% 88%, rgba(215, 205, 255, 0.75), transparent 28%),
+    linear-gradient(135deg, #fff9fb 0%, #fff4f7 52%, #f6f2ff 100%);
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: center;
+  justify-content: flex-start;
   overflow: hidden;
   position: relative;
-  padding: 40px 20px 60px;
+  padding: 54px 24px 72px;
 `;
 
 const GlowOrb = styled(motion.div)`
@@ -26,7 +26,7 @@ const GlowOrb = styled(motion.div)`
   width: 420px;
   height: 420px;
   border-radius: 50%;
-  background: radial-gradient(circle, rgba(255, 181, 213, 0.3) 0%, rgba(201, 170, 255, 0.12) 38%, transparent 72%);
+  background: radial-gradient(circle, rgba(255, 163, 198, 0.32) 0%, rgba(194, 178, 255, 0.18) 38%, transparent 72%);
   filter: blur(8px);
   z-index: 1;
 `;
@@ -58,19 +58,33 @@ const Header = styled.div`
   position: relative;
   z-index: 10;
   text-align: center;
-  margin-bottom: 18px;
+  max-width: 820px;
+  margin-bottom: 34px;
+`;
+
+const Eyebrow = styled(motion.div)`
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 14px;
+  border-radius: 999px;
+  color: #9a5276;
+  background: rgba(255, 255, 255, 0.76);
+  border: 1px solid rgba(194, 119, 157, 0.18);
+  box-shadow: 0 8px 22px rgba(151, 91, 126, 0.08);
+  font-size: 0.78rem;
+  font-weight: 700;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
 `;
 
 const Title = styled(motion.h1)`
-  font-size: clamp(2.2rem, 5vw, 4.1rem);
-  color: #fff;
-  margin: 0;
-  letter-spacing: 1px;
+  font-size: clamp(2.5rem, 6vw, 5rem);
+  line-height: 1.08;
+  margin: 18px 0 0;
+  letter-spacing: -0.02em;
   font-family: 'Pacifico', cursive;
-  text-shadow:
-    0 0 18px rgba(255, 132, 198, 0.9),
-    0 0 28px rgba(255, 80, 160, 0.8);
-  background: linear-gradient(135deg, #ffd0eb 0%, #ff7bc5 28%, #ffd7ee 62%, #ffc4df 100%);
+  background: linear-gradient(135deg, #7f3f67 0%, #c96d9b 48%, #8872c2 100%);
   -webkit-background-clip: text;
   background-clip: text;
   color: transparent;
@@ -78,34 +92,51 @@ const Title = styled(motion.h1)`
 
 const Subtitle = styled(motion.p)`
   font-size: clamp(0.95rem, 2vw, 1.35rem);
-  color: rgba(255, 255, 255, 0.8);
-  margin-top: 12px;
-  font-family: 'Poppins', sans-serif;
-  letter-spacing: 0.04em;
+  color: #785b70;
+  margin: 16px auto 0;
+  max-width: 560px;
+  font-family: 'Roboto', sans-serif;
+  font-size: clamp(1rem, 2vw, 1.2rem);
+  line-height: 1.65;
+`;
+
+const MainContent = styled.div`
+  position: relative;
+  z-index: 8;
+  width: min(1120px, 100%);
+  display: grid;
+  grid-template-columns: minmax(320px, 0.95fr) minmax(320px, 1.05fr);
+  align-items: center;
+  gap: clamp(28px, 5vw, 72px);
+
+  @media (max-width: 820px) {
+    grid-template-columns: 1fr;
+    max-width: 620px;
+  }
 `;
 
 const PhotoContainer = styled(motion.div)`
   position: relative;
   z-index: 8;
-  width: min(100%, 860px);
+  width: 100%;
   display: flex;
   justify-content: center;
   align-items: center;
-  margin: 16px auto 8px;
+  margin: 0 auto;
 `;
 
 const PhotoFrame = styled.div`
   position: relative;
-  width: min(88vw, 560px);
+  width: min(100%, 520px);
   aspect-ratio: 1 / 1;
   padding: 12px;
   border-radius: 36px;
-  background: linear-gradient(145deg, rgba(255, 225, 241, 0.55), rgba(255, 105, 180, 0.12));
-  border: 1px solid rgba(255, 255, 255, 0.38);
+  background: linear-gradient(145deg, #ffffff, #f9eaf4);
+  border: 1px solid rgba(167, 105, 147, 0.16);
   box-shadow:
-    0 24px 70px rgba(255, 61, 156, 0.28),
-    0 0 0 8px rgba(255, 210, 233, 0.08),
-    inset 0 0 28px rgba(255, 255, 255, 0.22);
+    0 24px 70px rgba(145, 79, 122, 0.18),
+    0 0 0 8px rgba(255, 255, 255, 0.55),
+    inset 0 0 28px rgba(255, 255, 255, 0.8);
   overflow: hidden;
   transform: rotate(-1deg);
   transition: transform 0.45s ease, box-shadow 0.45s ease;
@@ -113,9 +144,9 @@ const PhotoFrame = styled.div`
   &:hover {
     transform: rotate(0deg) translateY(-6px) scale(1.015);
     box-shadow:
-      0 30px 80px rgba(255, 61, 156, 0.36),
-      0 0 0 8px rgba(255, 210, 233, 0.12),
-      inset 0 0 28px rgba(255, 255, 255, 0.28);
+      0 30px 80px rgba(145, 79, 122, 0.25),
+      0 0 0 8px rgba(255, 255, 255, 0.72),
+      inset 0 0 28px rgba(255, 255, 255, 0.9);
   }
 
   &::before {
@@ -123,7 +154,7 @@ const PhotoFrame = styled.div`
     position: absolute;
     inset: 12px;
     border-radius: 27px;
-    border: 1px solid rgba(255, 255, 255, 0.5);
+    border: 1px solid rgba(255, 255, 255, 0.8);
     pointer-events: none;
     z-index: 2;
   }
@@ -218,6 +249,13 @@ function App() {
       <FloatingHearts count={24} />
 
       <Header>
+        <Eyebrow
+          initial={{ opacity: 0, y: -12 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6 }}
+        >
+          <span aria-hidden="true">✦</span> Một lời chúc thật dịu dàng <span aria-hidden="true">✦</span>
+        </Eyebrow>
         <Title
           initial={{ opacity: 0, y: -30 }}
           animate={{ opacity: 1, y: 0 }}
@@ -234,18 +272,23 @@ function App() {
         </Subtitle>
       </Header>
 
-      <PhotoContainer
-        initial={{ opacity: 0, scale: 0.92 }}
-        animate={{ opacity: 1, scale: 1 }}
-        transition={{ duration: 1, delay: 0.35 }}
-      >
-        <PhotoFrame>
-          <Portrait src="/huongmuoi-8-3.png" alt="Huongmuoi trong tà áo dài màu hồng" />
-          <PhotoCaption>Gửi người anh thương</PhotoCaption>
-        </PhotoFrame>
-      </PhotoContainer>
+      <MainContent>
+        <PhotoContainer
+          initial={{ opacity: 0, x: -28 }}
+          animate={{ opacity: 1, x: 0 }}
+          transition={{ duration: 0.8, delay: 0.25 }}
+        >
+          <PhotoFrame>
+            <Portrait
+              src={`${process.env.PUBLIC_URL}/huongmuoi-8-3.png`}
+              alt="Huongmuoi trong tà áo dài màu hồng"
+            />
+            <PhotoCaption>Gửi người anh thương</PhotoCaption>
+          </PhotoFrame>
+        </PhotoContainer>
 
-      <MessageCard marginBottom />
+        <MessageCard marginBottom />
+      </MainContent>
     </AppContainer>
   );
 }
