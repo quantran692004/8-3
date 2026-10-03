@@ -3,6 +3,7 @@ import styled from 'styled-components';
 import { motion } from 'framer-motion';
 import MessageCard from './components/MessageCard';
 import FloatingHearts from './components/FloatingHearts';
+import portraitImage from './huongmuoi-8-3.png';
 import './App.css';
 
 const AppContainer = styled.div`
@@ -280,7 +281,7 @@ function App() {
         >
           <PhotoFrame>
             <Portrait
-              src={`${process.env.PUBLIC_URL}/huongmuoi-8-3.png`}
+              src={portraitImage}
               alt="Huongmuoi trong tà áo dài màu hồng"
             />
             <PhotoCaption>Gửi người anh thương</PhotoCaption>
